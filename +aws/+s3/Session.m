@@ -2,7 +2,7 @@ classdef Session < handle
     %SESSION helper for AWS S3 client, credentials, connection, operations
     
     properties (GetAccess = 'public', SetAccess = 'private')
-        amazonS3Client = []
+        client = []
     end
     
     methods(Access = 'public', Static)
@@ -48,7 +48,6 @@ classdef Session < handle
             % pass reference to instance of session
             sess = localInstance;
         end
-        
     end
     
     methods (Access = 'private')
@@ -56,10 +55,10 @@ classdef Session < handle
         function this = Session(region,credentials)
             
             % init S3 client
-            this.amazonS3Client = com.amazonaws.services.s3.AmazonS3Client(credentials);
+            this.client = com.amazonaws.services.s3.AmazonS3Client(credentials);
             
             % set the region
-            this.amazonS3Client.setRegion(region);
+            this.client.setRegion(region);
         end
     end
     
