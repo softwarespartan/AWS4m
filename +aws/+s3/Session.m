@@ -5,12 +5,9 @@ classdef Session < handle
         client = []
     end
     
-    methods(Access = 'public', Static)
+    methods(Access = 'public')
         
-        function sess = init(region,credentials)
-            
-            % create presistent instance for to call getInstance()
-            persistent localInstance;
+        function this = Session(region,credentials)
             
             % enforce function signature size
             if nargin ~= 1 && nargin ~= 2; error('usage Session(region,credentials)'); end
@@ -42,18 +39,6 @@ classdef Session < handle
                 end
             end
             
-            % call the constructor to create local instance
-            localInstance = aws.s3.Session(region,credentials);
-            
-            % pass reference to instance of session
-            sess = localInstance;
-        end
-    end
-    
-    methods (Access = 'private')
-        
-        function this = Session(region,credentials)
-            
             % init S3 client
             this.client = com.amazonaws.services.s3.AmazonS3Client(credentials);
             
@@ -61,6 +46,4 @@ classdef Session < handle
             this.client.setRegion(region);
         end
     end
-    
 end
-

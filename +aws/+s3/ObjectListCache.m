@@ -24,7 +24,7 @@ classdef ObjectListCache
         function this = ObjectListCache(s3)               
             
             % enforce function signature
-            if nargin ~= 1; error('usage: ObjectListCache(s3,bucket,prefix)'); end
+            if nargin ~= 1; error('usage: aws.s3.ObjectListCache(s3,bucket,prefix)'); end
             
             % enforace arg1 type
             if ~isa(s3,'aws.s3.Session'); error('input arg1 must be of type aws.s3.Session'); end
@@ -52,7 +52,7 @@ classdef ObjectListCache
                 pfi = prefix{i};
             
                 % get the unique id for this bucket prefix combo
-                uid = ObjectListCache.bucketAndKey2Id(bucket,pfi);
+                uid = aws.s3.ObjectListCache.bucketAndKey2Id(bucket,pfi);
 
                 % for now, error if duplicate bucket://prefix identifier
                 if this.prefixSet.contains(uid); error(['cache already contains prefix: ',uid]); end
@@ -85,7 +85,7 @@ classdef ObjectListCache
         
         function bool = containsPrefix(this,bucket,prefix)
             bool = this.prefixSet.contains(                           ...
-                       ObjectListCache.bucketAndKey2Id(bucket,prefix) ...
+                       aws.s3.ObjectListCache.bucketAndKey2Id(bucket,prefix) ...
                    );
         end
         
